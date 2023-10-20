@@ -14,9 +14,11 @@
     "antd": "^5.9.0",
     "axios": "^1.5.0",
     "react": "^18.2.0",
+    "react-highlight-words": "^0.18.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "dotenv": "^16.3.1",
+    "query-string": "^8.1.0",
     "debug": "~2.6.9",
     "cookie-parser": "~1.4.4"
   },

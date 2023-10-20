@@ -14,37 +14,31 @@ import {
 const { Option } = Select;
 const residences = [
   {
-    value: 'zhejiang',
-    label: 'Zhejiang',
+    value: 'Argentina',
+    label: 'Argentina',
     children: [
       {
-        value: 'hangzhou',
-        label: 'Hangzhou',
+        value: 'Buenos Aires',
+        label: 'Buenos Aires',
         children: [
           {
-            value: 'xihu',
-            label: 'West Lake',
-          },
+            value: 'CABA',
+            label: 'CABA',
+          }
         ],
       },
-    ],
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
       {
-        value: 'nanjing',
-        label: 'Nanjing',
+        value: 'Cordoba',
+        label: 'Cordoba',
         children: [
           {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
+            value: 'Cordoba',
+            label: 'Cordoba',
+          }
+        ]
+      }
     ],
-  },
+  }
 ];
 
 const tailFormItemLayout = {
@@ -138,6 +132,8 @@ const App = () => {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
+
+
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select
@@ -145,35 +141,12 @@ const App = () => {
           width: 70,
         }}
       >
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
+        <Option value="54">+54</Option>
       </Select>
     </Form.Item>
   );
-  const suffixSelector = (
-    <Form.Item name="suffix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="USD">$</Option>
-        <Option value="CNY">¥</Option>
-      </Select>
-    </Form.Item>
-  );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-  const onWebsiteChange = (value) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-    }
-  };
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
+
+
   return (
     <Form
       {...formItemLayout}
@@ -181,8 +154,8 @@ const App = () => {
       name="register"
       onFinish={onFinish}
       initialValues={{
-        residence: ['zhejiang', 'hangzhou', 'xihu'],
-        prefix: '86',
+        residence: ['Buenos Aires', 'Cordoba', 'Mendoza'],
+        prefix: '54',
       }}
       style={{
         maxWidth: 600,
@@ -291,52 +264,6 @@ const App = () => {
       </Form.Item>
 
       <Form.Item
-        name="donation"
-        label="Donation"
-        rules={[
-          {
-            required: true,
-            message: 'Please input donation amount!',
-          },
-        ]}
-      >
-        <InputNumber
-          addonAfter={suffixSelector}
-          style={{
-            width: '100%',
-          }}
-        />
-      </Form.Item>
-
-      <Form.Item
-        name="website"
-        label="Website"
-        rules={[
-          {
-            required: true,
-            message: 'Please input website!',
-          },
-        ]}
-      >
-        <AutoComplete options={websiteOptions} onChange={onWebsiteChange} placeholder="website">
-          <Input />
-        </AutoComplete>
-      </Form.Item>
-
-      <Form.Item
-        name="intro"
-        label="Intro"
-        rules={[
-          {
-            required: true,
-            message: 'Please input Intro',
-          },
-        ]}
-      >
-        <Input.TextArea showCount maxLength={100} />
-      </Form.Item>
-
-      <Form.Item
         name="gender"
         label="Gender"
         rules={[
@@ -353,27 +280,7 @@ const App = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item label="Captcha" extra="We must make sure that your are a human.">
-        <Row gutter={8}>
-          <Col span={12}>
-            <Form.Item
-              name="captcha"
-              noStyle
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input the captcha you got!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Button>Get captcha</Button>
-          </Col>
-        </Row>
-      </Form.Item>
+
 
       <Form.Item
         name="agreement"
@@ -406,18 +313,7 @@ const App = () => {
       <Form.Item name="date-time-picker" label="DatePicker[showTime]" {...config}>
         <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
       </Form.Item>
-      <Form.Item name="month-picker" label="MonthPicker" {...config}>
-        <DatePicker picker="month" />
-      </Form.Item>
-      <Form.Item name="range-picker" label="RangePicker" {...rangeConfig}>
-        <RangePicker />
-      </Form.Item>
-      <Form.Item name="range-time-picker" label="RangePicker[showTime]" {...rangeConfig}>
-        <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-      </Form.Item>
-      <Form.Item name="time-picker" label="TimePicker" {...config}>
-        <TimePicker />
-      </Form.Item>
+
 
 
 
