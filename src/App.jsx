@@ -8,7 +8,7 @@ import Pagos from './modules/Pagos'
 
 import Personal from './modules/Personal'
 import AltaPersonal from './modules/Personal/AltaPersonal'
-import byPersonal from './modules/Personal/Editar'
+import EditarPersonal from './modules/Personal/Editar'
 import Agenda from './modules/Personal/Agenda'
 import AgendaMedico from './modules/Personal/Agenda/Medico'
 import AgendaAlta from './modules/Personal/Agenda/Alta'
@@ -43,9 +43,11 @@ function App() {
                 <Route path='agregar' >
                   <Route path=':medico' element={<AgendaAlta />} />
                 </Route>
-                <Route path=':medico' element={<AgendaMedico />} />
+                 {/* <Route path=':medico' element={<AgendaMedico doctorKey={medico} />} /> */}
+                 {/* <Route path="/ruta/:parametro1/:parametro2" />*/}
+                <Route path=':medico' element={<AgendaMedico doctorKey={1} />} />
               </Route>
-              <Route path=':personal' element={<byPersonal />} />
+              <Route path=':personal' element={<EditarPersonal />} />
             </Route>
             <Route path='paciente' >
               <Route index element={<Paciente />} />

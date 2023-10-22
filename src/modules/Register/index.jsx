@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import TerminosCondiciones from './Terminos&Condiciones'
+
 import {
   Button, DatePicker, Form, TimePicker, AutoComplete,
   Cascader,
   Checkbox,
-  Col,
+  Modal,
   Input,
   InputNumber,
   Row,
@@ -55,12 +57,6 @@ const tailFormItemLayout = {
 };
 
 
-
-
-
-
-
-
 const { RangePicker } = DatePicker;
 const formItemLayout = {
   labelCol: {
@@ -98,6 +94,7 @@ const rangeConfig = {
     },
   ],
 };
+
 const onFinish = (fieldsValue) => {
   // Should format date value before submit.
   const rangeValue = fieldsValue['range-picker'];
@@ -147,6 +144,8 @@ const App = () => {
   );
 
 
+
+
   return (
     <Form
       {...formItemLayout}
@@ -162,6 +161,37 @@ const App = () => {
       }}
       scrollToFirstError
     >
+
+      <Form.Item
+        name="nombre"
+        label="Nombre"
+        tooltip="What do you want others to call you?"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your nickname!',
+            whitespace: true,
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="apellido"
+        label="Apellido"
+        tooltip="What do you want others to call you?"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your nickname!',
+            whitespace: true,
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
       <Form.Item
         name="email"
         label="E-mail"
@@ -185,7 +215,9 @@ const App = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
+            min: 8,
+            pattern: "^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$",
+            message: "La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. Puede tener otros símbolos.",
           },
         ]}
         hasFeedback
@@ -201,14 +233,16 @@ const App = () => {
         rules={[
           {
             required: true,
-            message: 'Please confirm your password!',
+            min: 8,
+            pattern: "^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$",
+            message: "La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. Puede tener otros símbolos.",
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
               if (!value || getFieldValue('password') === value) {
                 return Promise.resolve();
               }
-              return Promise.reject(new Error('The new password that you entered do not match!'));
+              return Promise.reject(new Error('No coinciden.'));
             },
           }),
         ]}
@@ -282,6 +316,8 @@ const App = () => {
 
 
 
+
+
       <Form.Item
         name="agreement"
         valuePropName="checked"
@@ -294,7 +330,20 @@ const App = () => {
         {...tailFormItemLayout}
       >
         <Checkbox>
-          I have read the <a href="">agreement</a>
+          I have read the <a onClick={() => {
+            Modal.confirm({
+              title: 'Leer',
+              content: TerminosCondiciones.descripcion,
+              footer: (_, { OkBtn }) => (
+                <>
+                  <OkBtn />
+                </>
+              )
+            }
+            )
+          }
+          }> Conditions </a>
+
         </Checkbox>
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>

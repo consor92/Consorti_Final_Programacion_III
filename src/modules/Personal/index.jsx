@@ -133,6 +133,13 @@ const App = () => {
 
   const columns = [
     {
+      title: 'Matricula',
+      dataIndex: 'matricula',
+      key: 'matricula',
+      width: '10%',
+      ...getColumnSearchProps('matricula'),
+    },
+    {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
@@ -150,9 +157,10 @@ const App = () => {
       title: 'Action',
       dataIndex: 'operation',
       key: 'operation',
-      render: () => (
+      render: (_,record) => (
         <Space size="middle">
-          <Link to="/personal/4"> <EditFilled /> </Link> 
+          
+          <Link to={`/personal/${record.matricula}`}> <EditFilled /> </Link> 
           <Link to="/personal/agenda/4"> <BookFilled /> </Link>
         </Space>
       ),

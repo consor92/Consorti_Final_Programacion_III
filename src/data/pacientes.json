@@ -1,0 +1,95 @@
+[
+    {
+        "id": 1,
+        "nombre": "Pedro",
+        "apellido": "Lopez",
+        "email": "pedro@gmail.com",
+        "pass": "Asdfghjkl12",
+        "ususario": "pedrolopez",
+        "nacimiento": "1982-02-08",
+        "edad": 56,
+        "antecedentes": [
+            {
+                "area": "Cardiologia",
+                "año": 1990,
+                "info": "Miocarditis"
+            },
+            {
+                "area": "Alergista",
+                "año": 1990,
+                "info": "Alergia a los roedores"
+            }
+        ],
+        "localidad": [
+            "Argentina",
+            "Buenos Aires",
+            "Capital Federal"
+        ],
+        "pref": "+54",
+        "tel": "34567893",
+        "coberura": "PAMI",
+        "genero": "Masculino",
+        "saldo": 0,
+        "HistoriaClinica": [
+            {
+                "profesional": 111111,
+                "fecha": "2023-10-10",
+                "especialidad": "General",
+                "descripcion": "pee pee pee"
+            },
+            {
+                "profesional": 111111,
+                "fecha": "2020-02-04",
+                "especialidad": "Cardiologia",
+                "descripcion": "lo lo lo lo"
+            },
+            {
+                "profesional": 222222,
+                "fecha": "2020-07-21",
+                "especialidad": "General",
+                "descripcion": "bla bla bvla bla"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "nombre": "Maria",
+        "apellido": "Salazar",
+        "email": "maria@gmail.com",
+        "pass": "Asdfghjkl12",
+        "ususario": "mariasalazar",
+        "nacimiento": "1991-02-08",
+        "edad": 31,
+        "antecedentes": [
+            {
+                "especialidad": "Alergista",
+                "año": 1990,
+                "info": "Alergia a los roedores"
+            }
+        ],
+        "localidad": [
+            "Argentina",
+            "Cordoba",
+            "Carlos Paz"
+        ],
+        "pref": "+54",
+        "tel": "12321212",
+        "coberura": "Osde",
+        "genero": "Femenino",
+        "saldo": 3000,
+        "HistoriaClinica": [
+            {
+                "profesional": 333333,
+                "fecha": "2023-12-25",
+                "especialidad": "General",
+                "descripcion": "ñaa ñaaañ ñaaa"
+            },
+            {
+                "profesional": 222222,
+                "fecha": "2023-05-30",
+                "especialidad": "Cardiologia",
+                "descripcion": "ka kaa ka kaa"
+            }
+        ]
+    }
+]

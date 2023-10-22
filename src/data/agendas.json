@@ -1,0 +1,296 @@
+[
+    {
+        "key": 1,
+        "matricula":111111,
+        "nombre": "John",
+        "apellido": "Brown",
+        "especialidad": "General",
+        "disponibilidad": [
+            {
+                "fecha": "2023-10-11",
+                "type": "success",
+                "des    cripcion": "Hay turnos",
+                "citas": [
+                    {
+                        "idTurno": "1001",
+                        "hora": "20:30:00",
+                        "consultorio": "301",
+                        "paciente": "1",
+                        "type": "error"
+                    },
+                    {
+                        "idTurno": "1002",
+                        "hora": "21:00:00",
+                        "consultorio": "301",
+                        "paciente": "2",
+                        "type": "error"
+                    },
+                    {
+                        "idTurno": "1003",
+                        "hora": "21:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    }
+                ]
+            },
+            {
+                "fecha": "2023-10-12",
+                "type": "error",
+                "descripcion": "No hay turnos",
+                "citas": [
+                    {
+                        "idTurno": "1004",
+                        "hora": "20:30:00",
+                        "consultorio": "301",
+                        "paciente": "1",
+                        "type": "error"
+                    },
+                    {
+                        "idTurno": "1005",
+                        "hora": "21:00:00",
+                        "consultorio": "301",
+                        "paciente": "2",
+                        "type": "error"
+                    },
+                    {
+                        "idTurno": "1006",
+                        "hora": "21:30:00",
+                        "consultorio": "301",
+                        "paciente": "3",
+                        "type": "error"
+                    }
+                ]
+            },
+            {
+                "fecha": "2023-10-21",
+                "type": "success",
+                "descripcion": "Hay turnos",
+                "citas": [
+                    {
+                        "idTurno": "1007",
+                        "hora": "20:30:00",
+                        "consultorio": "301",
+                        "paciente": "1",
+                        "type": "error"
+                    },
+                    {
+                        "idTurno": "1008",
+                        "hora": "21:00:00",
+                        "consultorio": "301",
+                        "paciente": "2",
+                        "type": "error"
+                    },
+                    {
+                        "idTurno": "1009",
+                        "hora": "21:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    }
+                ]
+            },
+            {
+                "fecha": "2023-10-22",
+                "type": "success",
+                "descripcion": "Hay turnos",
+                "citas": [
+                    {
+                        "idTurno": "1010",
+                        "hora": "20:30:00",
+                        "consultorio": "301",
+                        "paciente": "1",
+                        "type": "error"
+                    },
+                    {
+                        "idTurno": "1011",
+                        "hora": "21:00:00",
+                        "consultorio": "301",
+                        "paciente": "2",
+                        "type": "error"
+                    },
+                    {
+                        "idTurno": "1012",
+                        "hora": "21:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    }
+                ]
+            },
+            {
+                "fecha": "2023-10-11",
+                "type": "error",
+                "descripcion": "No hay mas turnos",
+                "citas": [
+                    {
+                        "idTurno": "1013",
+                        "hora": "20:30:00",
+                        "consultorio": "301",
+                        "paciente": "1",
+                        "type": "error"
+                    },
+                    {
+                        "idTurno": "1014",
+                        "hora": "21:00:00",
+                        "consultorio": "301",
+                        "paciente": "2",
+                        "type": "error"
+                    },
+                    {
+                        "idTurno": "1015",
+                        "hora": "21:30:00",
+                        "consultorio": "301",
+                        "paciente": "3",
+                        "type": "error"
+                    }
+                ]
+            }
+        ],
+        "descripcion": "Agenda Confirmada",
+        "tags": [
+            "Habilitada"
+        ],
+        "type": "success"
+    },
+    {
+        "key": 2,
+        "matricula":222222,
+        "nombre": "Marcos",
+        "apellido": "Gonzalez",
+        "especialidad": "General",
+        "disponibilidad": [
+            {
+                "fecha": "2023-12-11",
+                "type": "success",
+                "descripcion": "Hay turnos",
+                "citas": [
+                    {
+                        "idTurno": "1016",
+                        "hora": "20:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    },
+                    {
+                        "idTurno": "1017",
+                        "hora": "21:00:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    },
+                    {
+                        "idTurno": "1018",
+                        "hora": "21:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    }
+                ]
+            },
+            {
+                "fecha": "2023-12-12",
+                "type": "success",
+                "descripcion": "Hay turnos",
+                "citas": [
+                    {
+                        "idTurno": "1019",
+                        "hora": "20:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    },
+                    {
+                        "idTurno": "1020",
+                        "hora": "21:00:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    },
+                    {
+                        "idTurno": "1021",
+                        "hora": "21:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    }
+                ]
+            }
+        ],
+        "descripcion": "Agenda Pendiente de confirmacion",
+        "tags": [
+            "Pendiente"
+        ],
+        "type": "warning"
+    },
+    {
+        "key": 3,
+        "matricula":333333,
+        "nombre": "Pedro",
+        "apellido": "Garcia",
+        "especialidad": "Cardiologia",
+        "disponibilidad": [
+            {
+                "fecha": "2023-11-11",
+                "type": "error",
+                "descripcion": "Agenda Cancelada",
+                "citas": [
+                    {
+                        "idTurno": "7",
+                        "hora": "20:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    },
+                    {
+                        "idTurno": "8",
+                        "hora": "21:00:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    },
+                    {
+                        "idTurno": "9",
+                        "hora": "21:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    }
+                ]
+            },
+            {
+                "fecha": "2023-11-12",
+                "type": "error",
+                "descripcion": "Agenda Cancelada",
+                "citas": [
+                    {
+                        "idTurno": "10",
+                        "hora": "20:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    },
+                    {
+                        "idTurno": "11",
+                        "hora": "21:00:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    },
+                    {
+                        "idTurno": "12",
+                        "hora": "21:30:00",
+                        "consultorio": "301",
+                        "paciente": "",
+                        "type": "success"
+                    }
+                ]
+            }
+        ],
+        "descripcion": "Agenda Cancelada",
+        "tags": [
+            "Cancelada"
+        ],
+        "type": "error"
+    }
+]

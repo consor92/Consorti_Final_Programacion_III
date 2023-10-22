@@ -11,13 +11,15 @@ import {
   DollarOutlined,
   PoweroffOutlined,
   LoginOutlined,
+  CustomerServiceOutlined,
+  CommentOutlined ,
   IdcardOutlined,
   SearchOutlined
 } from '@ant-design/icons';
 
 import { Outlet, Link } from 'react-router-dom'
-import { Layout, Menu, theme } from 'antd';
-import { useState } from 'react'
+import { Layout, Menu, theme ,FloatButton  } from 'antd';
+import Ruta from './Navegacion'
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -66,7 +68,7 @@ const item = [
       getItem(<Link to="/turnos/cancelar/21"> Cancelar (S) </Link>, '23', <DeleteOutlined />)
 
     ]),
-    getItem(<Link to="/logout"> LogOut </Link>, '24', <PoweroffOutlined />)
+  getItem(<Link to="/logout"> LogOut </Link>, '24', <PoweroffOutlined />)
 ]
 
 
@@ -102,7 +104,7 @@ const App = () => {
             background: colorBgContainer,
           }}
         >
-          <h1> Pagina </h1>
+          <Ruta />
         </Header>
 
 
@@ -122,6 +124,7 @@ const App = () => {
 
             <Outlet />
 
+
           </div>
         </Content>
         <Footer
@@ -129,6 +132,8 @@ const App = () => {
             textAlign: 'center',
           }}
         >
+          
+
           INSPT UTN 2023 - Programacion III - Consorti Gonzalo Nicolas
         </Footer>
       </Layout>

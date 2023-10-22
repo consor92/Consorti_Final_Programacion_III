@@ -1,0 +1,9 @@
+-editar persona no manda el Submit
+-tabla del mostrar persona no se ponerle los id a los accion
+- heeder cambiar segun la pagina
+-text area de scrool para mostrar un acuerdo de condiciones
+-flex de Login y HEADER no se mueven
+-pasarle la ruta en cada vista al Breadcrumb 
+-editar persona, boton agenda no redirecciona
+-en App.jsx    <Route path=':medico' element={<AgendaMedico doctorKey={medico} />} />   medico no lo toma
+-Modal de pedido de turno no anda paginnacion

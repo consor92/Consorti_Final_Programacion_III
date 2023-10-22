@@ -1,10 +1,10 @@
-function AltaAgenda() {
+function AltaPaciente() {
 
     return (
       <div>
-        <h1>Alta Agendas </h1>
+        <h1>AltaPaciente</h1>
       </div>
     )
   }
   
-  export default AltaAgenda
+  export default AltaPaciente

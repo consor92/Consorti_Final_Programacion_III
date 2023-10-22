@@ -1,0 +1,13 @@
+{
+    "matricula":333333,
+    "nombre":"Pedro",
+    "apellido":"Garcia",
+    "email":"pedro@gmail.com",
+    "pass":"Asdfghjk1",
+    "nick":"1234",
+    "localidad":[],
+    "tel":"45678909",
+    "sanatorio":[],
+    "especialidad":"General",
+    "genero":"Male"
+}
