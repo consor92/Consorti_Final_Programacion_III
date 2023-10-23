@@ -54,21 +54,22 @@ const item = [
   getItem(<Link> Pacientes </Link>, '12', <BarsOutlined />,
     [
       getItem(<Link to="/paciente"> Mostrar Todos </Link>, '13', <SearchOutlined />),
-      getItem(<Link to="/paciente/alta"> Alta </Link>, '14', <PlusOutlined />),
-      getItem(<Link to="/paciente/66"> Editar (S) </Link>, '15', <EditOutlined />)
+      getItem(<Link to="/paciente/1"> Paciente </Link>, '14', <SearchOutlined />),
+      getItem(<Link to="/paciente/alta"> Alta </Link>, '15', <PlusOutlined />),
+      getItem(<Link to="/paciente/Editar/2"> Editar (S) </Link>, '16', <EditOutlined />)
     ]),
-  getItem(<Link> Turnos </Link>, '16', <BarsOutlined />,
+  getItem(<Link> Turnos </Link>, '17', <BarsOutlined />,
     [
-      getItem(<Link to="/turnos"> Mostrar Todos </Link>, '17', <SearchOutlined />),
-      getItem(<Link to="/turnos/66"> Paciente (S) </Link>, '18', <SearchOutlined />),
-      getItem(<Link to="/turnos/solicitud"> Otorgar </Link>, '19', <PlusOutlined />),
-      getItem(<Link to="/turnos/editar"> Modificar </Link>, '20', <EditOutlined />),
-      getItem(<Link to="/turnos/editar/32"> Modifiar (S) </Link>, '21', <EditOutlined />),
-      getItem(<Link to="/turnos/cancelar"> cancelar </Link>, '22', <DeleteOutlined />),
-      getItem(<Link to="/turnos/cancelar/21"> Cancelar (S) </Link>, '23', <DeleteOutlined />)
+      getItem(<Link to="/turnos"> Mostrar Todos </Link>, '18', <SearchOutlined />),
+      getItem(<Link to="/turnos/66"> Paciente (S) </Link>, '19', <SearchOutlined />),
+      getItem(<Link to="/turnos/solicitud"> Otorgar </Link>, '20', <PlusOutlined />),
+      getItem(<Link to="/turnos/editar"> Modificar </Link>, '21', <EditOutlined />),
+      getItem(<Link to="/turnos/editar/32"> Modifiar (S) </Link>, '22', <EditOutlined />),
+      getItem(<Link to="/turnos/cancelar"> cancelar </Link>, '23', <DeleteOutlined />),
+      getItem(<Link to="/turnos/cancelar/21"> Cancelar (S) </Link>, '24', <DeleteOutlined />)
 
     ]),
-  getItem(<Link to="/logout"> LogOut </Link>, '24', <PoweroffOutlined />)
+  getItem(<Link to="/logout"> LogOut </Link>, '25', <PoweroffOutlined />)
 ]
 
 

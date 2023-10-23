@@ -1,0 +1,38 @@
+[
+    {
+        "value": "Argentina",
+        "label": "Argentina",
+        "children": [
+            {
+                "value": "Buenos Aires",
+                "label": "Buenos Aires",
+                "children": [
+                    {
+                        "value": "CABA",
+                        "label": "CABA"
+                    }
+                ]
+            },
+            {
+                "value": "Cordoba",
+                "label": "Cordoba",
+                "children": [
+                    {
+                        "value": "Carlos Paz",
+                        "label": "Carlos Paz"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "value": "Chile",
+        "label": "Chile",
+        "children": [
+            {
+                "value": "Santiago de Chile",
+                "label": "Santiago de Chile"
+            }
+        ]
+    }
+]

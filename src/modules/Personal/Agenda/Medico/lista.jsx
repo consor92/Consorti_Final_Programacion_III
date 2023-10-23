@@ -55,17 +55,15 @@ const App = ({ availabilityData }) => {
 
 
                         <Modal
-                            title={`Información Paciente `}
-                            open={modalPaciente}
+                            open={false}
                             onOk={() => setModalPaciente(false)}
                             onCancel={() => setModalPaciente(false)}
                             width={"80%"}
                         >
 
+
                              <ListaPacientes id={ item.paciente }/>   
                             
-
-
                         </Modal>
 
                     </List.Item>

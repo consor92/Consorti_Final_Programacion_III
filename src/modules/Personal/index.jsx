@@ -1,11 +1,9 @@
-import { EditFilled , BookFilled , SearchOutlined} from '@ant-design/icons';
+import { EditFilled, BookFilled, SearchOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom'
 import React, { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Input, Space, Radio, Table } from 'antd';
+import { Button, Input, Space, Radio, Table, Modal } from 'antd'; // Asegúrate de importar Modal de 'antd'
 import datos from '../../data/data.json'
-
-
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -18,8 +16,7 @@ const rowSelection = {
   }),
 };
 
-
-const App = () => {
+const MostrarPaciente = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
@@ -130,7 +127,6 @@ const App = () => {
       ),
   });
 
-
   const columns = [
     {
       title: 'Matricula',
@@ -140,11 +136,18 @@ const App = () => {
       ...getColumnSearchProps('matricula'),
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      width: '30%',
-      ...getColumnSearchProps('name'),
+      title: 'Nombre',
+      dataIndex: 'nombre',
+      key: 'nombre',
+      width: '20%',
+      ...getColumnSearchProps('nombre'),
+    },
+    {
+      title: 'Apellido',
+      dataIndex: 'apellido',
+      key: 'apellido',
+      width: '20%',
+      ...getColumnSearchProps('apellido'),
     },
     {
       title: 'Especialidad',
@@ -154,42 +157,65 @@ const App = () => {
       ...getColumnSearchProps('especialidad'),
     },
     {
+      title: 'Ubicacion',
+      dataIndex: 'sanatorio',
+      key: 'sanatorio',
+      width: '20%',
+      ...getColumnSearchProps('sanatorio'),
+    },
+    {
       title: 'Action',
       dataIndex: 'operation',
       key: 'operation',
-      render: (_,record) => (
+      render: (_, record) => (
         <Space size="middle">
-          
-          <Link to={`/personal/${record.matricula}`}> <EditFilled /> </Link> 
+          <Link to={`/personal/${record.matricula}`}> <EditFilled /> </Link>
           <Link to="/personal/agenda/4"> <BookFilled /> </Link>
         </Space>
       ),
     },
   ];
 
+  const [modalPaciente, setModalPaciente] = useState(false);
 
-  
-  return <Table
-    columns={columns}
-    dataSource={datos}
-    rowSelection={{
-      type: 'radio',
-      ...rowSelection,
-    }}
-    pagination={{
-      position: [ "bottomCenter"],
-      defaultPageSize: 10, 
-      showQuickJumper: true,
-    }}
-    expandable={{
-      expandedRowRender: (record) => (
-        <Space size="middle">
-          {record.description}
-        </Space>
-      ),
-      rowExpandable: (record) => record.name !== 'Not Expandable',
-    }}
-  />;
+  return (
+    <>
+      <Table
+        columns={columns}
+        dataSource={datos.map((record, index) => ({
+          ...record,
+          key: index,
+        }))}
+        rowSelection={{
+          type: 'radio',
+          ...rowSelection,
+        }}
+        pagination={{
+          position: ["bottomCenter"],
+          defaultPageSize: 10,
+          showQuickJumper: true,
+        }}
+        expandable={datos.some(record => record.description) ? {
+          expandedRowRender: (record) => (
+            <Space size="middle">
+              {record.description}
+            </Space>
+          ),
+          rowExpandable: (record) => record.description !== '',
+        } : null
+        }
+      />
 
+      <Modal
+        title="Título del Modal"
+        open={modalPaciente}
+        onOk={() => setModalPaciente(false)}
+        onCancel={() => setModalPaciente(false)}
+      >
+        Contenido del Modal
+      </Modal>
+    </>
+  )
 };
-export default App;
+
+export default MostrarPaciente;

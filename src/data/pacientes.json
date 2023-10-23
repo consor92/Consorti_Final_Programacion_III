@@ -25,11 +25,12 @@
             "Buenos Aires",
             "Capital Federal"
         ],
-        "pref": "+54",
+        "pref": "54",
         "tel": "34567893",
-        "coberura": "PAMI",
+        "cobertura": "PAMI",
+        "numeroAfiliado": 345678,
         "genero": "Masculino",
-        "saldo": 0,
+        "saldo": -230,
         "HistoriaClinica": [
             {
                 "profesional": 111111,
@@ -49,7 +50,8 @@
                 "especialidad": "General",
                 "descripcion": "bla bla bvla bla"
             }
-        ]
+        ],
+        "descripcion": "Debe pagar coseguro"
     },
     {
         "id": 2,
@@ -72,9 +74,10 @@
             "Cordoba",
             "Carlos Paz"
         ],
-        "pref": "+54",
+        "pref": "54",
         "tel": "12321212",
-        "coberura": "Osde",
+        "cobertura": "Osde",
+        "numeroAfiliado": 345678,
         "genero": "Femenino",
         "saldo": 3000,
         "HistoriaClinica": [
@@ -90,6 +93,7 @@
                 "especialidad": "Cardiologia",
                 "descripcion": "ka kaa ka kaa"
             }
-        ]
+        ],
+        "descripcion": ""
     }
 ]

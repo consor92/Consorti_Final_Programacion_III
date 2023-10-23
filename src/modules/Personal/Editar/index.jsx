@@ -151,7 +151,7 @@ function EditarPersonal() {
       name="register"
       onFinish={onFinish}
       initialValues={{
-        prefix: '54'
+        prefix: persona.prefix
       }}
       style={{
         maxWidth: 600,
@@ -159,17 +159,16 @@ function EditarPersonal() {
       scrollToFirstError
     >
       <Form.Item
-        name="id"
-        label="Id"
+        name="matricula"
+        label="Matricula"
         initialValue={personal}
-        hidden
         rules={[
           {
             type: 'number'
           }
         ]}
       >
-        <Input />
+        <Input disabled/>
       </Form.Item>
 
       <Form.Item

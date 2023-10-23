@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import TerminosCondiciones from './Terminos&Condiciones'
+import residences from '../../data/localidades.json'
+import coberturasMedicas from '../../data/coberturasMedicas.json'
+
 
 import {
   Button, DatePicker, Form, TimePicker, AutoComplete,
@@ -7,41 +10,14 @@ import {
   Checkbox,
   Modal,
   Input,
-  InputNumber,
-  Row,
   Select
 } from 'antd';
 
 
 const { Option } = Select;
-const residences = [
-  {
-    value: 'Argentina',
-    label: 'Argentina',
-    children: [
-      {
-        value: 'Buenos Aires',
-        label: 'Buenos Aires',
-        children: [
-          {
-            value: 'CABA',
-            label: 'CABA',
-          }
-        ],
-      },
-      {
-        value: 'Cordoba',
-        label: 'Cordoba',
-        children: [
-          {
-            value: 'Cordoba',
-            label: 'Cordoba',
-          }
-        ]
-      }
-    ],
-  }
-];
+const { RangePicker } = DatePicker;
+
+
 
 const tailFormItemLayout = {
   wrapperCol: {
@@ -57,7 +33,7 @@ const tailFormItemLayout = {
 };
 
 
-const { RangePicker } = DatePicker;
+
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -76,24 +52,9 @@ const formItemLayout = {
     },
   },
 };
-const config = {
-  rules: [
-    {
-      type: 'object',
-      required: true,
-      message: 'Please select time!',
-    },
-  ],
-};
-const rangeConfig = {
-  rules: [
-    {
-      type: 'array',
-      required: true,
-      message: 'Please select time!',
-    },
-  ],
-};
+
+
+
 
 const onFinish = (fieldsValue) => {
   // Should format date value before submit.
@@ -118,17 +79,32 @@ const onFinish = (fieldsValue) => {
 
 
 
-
-
-
-
-
-
-const App = () => {
+function App ( dato ) {
   const [form] = Form.useForm();
+
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
+
+  const onFinishEdit = () => {
+    console.log('Received values of form: ', values);
+  }
+
+  const coberturaSelector = (
+    <Form.Item name="cobertura" noStyle>
+      <Select
+        style={{
+          width:'8em'
+        }}
+      >
+        {coberturasMedicas.map((cobertura) => (
+          <Option key={cobertura.value} value={cobertura.value}>
+            {cobertura.label}
+          </Option>
+        ))}
+      </Select>
+    </Form.Item>
+  );
 
 
   const prefixSelector = (
@@ -143,7 +119,17 @@ const App = () => {
     </Form.Item>
   );
 
+  const calculateAge = (birthdate) => {
+    const today = new Date();
+    const birthDate = new Date(birthdate);
+    const age = today.getFullYear() - birthDate.getFullYear();
+    return age;
+  };
 
+  const handleEdadChange = (date) => {
+    const age = date ? calculateAge(date) : '';
+    form.setFieldsValue({ edad: age });
+  };
 
 
   return (
@@ -151,7 +137,10 @@ const App = () => {
       {...formItemLayout}
       form={form}
       name="register"
-      onFinish={onFinish}
+      (
+        (dato !== null && dato !== undefined && typeof dato === 'number') ? onFinish={onFinishEdit} :
+        onFinish={onFinish} 
+      )
       initialValues={{
         residence: ['Buenos Aires', 'Cordoba', 'Mendoza'],
         prefix: '54',
@@ -266,13 +255,39 @@ const App = () => {
       </Form.Item>
 
       <Form.Item
+        name="nacimiento"
+        label="Fecha de Nacimiento"
+        rules={[
+          {
+            type: 'object',
+            required: true
+          },
+        ]}
+      >
+        <DatePicker onChange={handleEdadChange} />
+      </Form.Item>
+
+      <Form.Item
+        name="edad"
+        label="Edad"
+        hidden
+        initialValue=""
+        rules={[
+          {
+            type: 'number'
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
         name="residence"
-        label="Habitual Residence"
+        label="Localidad"
         rules={[
           {
             type: 'array',
-            required: true,
-            message: 'Please select your habitual residence!',
+            required: true
           },
         ]}
       >
@@ -280,8 +295,8 @@ const App = () => {
       </Form.Item>
 
       <Form.Item
-        name="phone"
-        label="Phone Number"
+        name="telefono"
+        label="Telefono"
         rules={[
           {
             required: true,
@@ -302,12 +317,11 @@ const App = () => {
         label="Gender"
         rules={[
           {
-            required: true,
-            message: 'Please select gender!',
+            required: true
           },
         ]}
       >
-        <Select placeholder="select your gender">
+        <Select placeholder="Genero">
           <Option value="male">Male</Option>
           <Option value="female">Female</Option>
           <Option value="other">Other</Option>
@@ -315,6 +329,25 @@ const App = () => {
       </Form.Item>
 
 
+
+      <Form.Item
+        name="numeroAfiliado"
+        label="Numero Afiliado"
+        rules={[
+          {
+            type: 'number',
+            required: true,
+            message: 'Numero de afiliacion',
+          },
+        ]}
+      >
+        <Input
+          addonBefore={coberturaSelector}
+          style={{
+            width: '100%',
+          }}
+        />
+      </Form.Item>
 
 
 
@@ -348,21 +381,12 @@ const App = () => {
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
-          Register
+          ((dato !== null && dato !== undefined && typeof dato === 'number') ?
+          Registrar :
+          Modificar
+          )
         </Button>
       </Form.Item>
-
-
-
-
-
-      <Form.Item name="date-picker" label="DatePicker" {...config}>
-        <DatePicker />
-      </Form.Item>
-      <Form.Item name="date-time-picker" label="DatePicker[showTime]" {...config}>
-        <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-      </Form.Item>
-
 
 
 
