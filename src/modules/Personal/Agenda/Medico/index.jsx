@@ -69,48 +69,6 @@ const AgendaMedico = ({ doctorKey }) => {
       >
         <ListaTurnos availabilityData={availabilityData} />
 
-        {/* 
-          <ul>
-            {availabilityData.map((cita) => (
-              <li key={cita.hora}>
-                <p><strong>Hora:</strong> {cita.hora}</p>
-                <p><strong>Consultorio:</strong> {cita.consultorio}</p>
-
-                <p><strong>Paciente:</strong>
-                  <Button type="link"  onClick={setModalPaciente}>
-                    <EyeTwoTone />
-                  </Button>
-                </p>
-
-
-                <Modal
-                  title={`Información Paciente `}
-                  open={modalPaciente}
-                  onOk={() => setModalPaciente(false)} 
-                  onCancel={() => setModalPaciente(false)}   
-                  style={{ top: 100, left: 200 }}             
-                >
-                  <p>Contenido del segundo modal</p>
-                </Modal>
-
-
-                {cita.type === 'success' ? (
-                  <Link to={`/Paciente/AsignarTurno/${cita.idTurno}`} >
-                    <Button type="primary" style={{ backgroundColor: 'green' }} >Asignar Turno</Button>
-                  </Link>
-                ) : (
-                  <Space wrap>
-                    <Link to={`/Paciente/CancelarTurno/${cita.idTurno}/${cita.paciente}`} >
-                      <Button type="primary" danger ghost >Cancelar Turno</Button>
-                    </Link>
-                  </Space>
-                )}
-
-              </li>
-            ))}
-          </ul>
-        */}
-
       </Modal>
 
 

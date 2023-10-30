@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom'
 import TerminosCondiciones from './Terminos&Condiciones'
 import residences from '../../data/localidades.json'
 import coberturasMedicas from '../../data/coberturasMedicas.json'
@@ -79,8 +80,10 @@ const onFinish = (fieldsValue) => {
 
 
 
-function App ( dato ) {
+function App() {
   const [form] = Form.useForm();
+
+  const { dato } = useParams()
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
@@ -94,7 +97,7 @@ function App ( dato ) {
     <Form.Item name="cobertura" noStyle>
       <Select
         style={{
-          width:'8em'
+          width: '8em'
         }}
       >
         {coberturasMedicas.map((cobertura) => (
@@ -131,16 +134,22 @@ function App ( dato ) {
     form.setFieldsValue({ edad: age });
   };
 
+  const handleName = "register"
+  const handleFinish = onFinish
+
+  if (dato) {
+    console.log("Dato:" + dato.paciente)
+    handleFinish = (dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === 'number') ? onFinishEdit : null
+    handleName = (dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === 'number') ? "edit" : null
+  }
 
   return (
+
     <Form
       {...formItemLayout}
       form={form}
-      name="register"
-      (
-        (dato !== null && dato !== undefined && typeof dato === 'number') ? onFinish={onFinishEdit} :
-        onFinish={onFinish} 
-      )
+      name={handleName}
+      onFinish={handleFinish}
       initialValues={{
         residence: ['Buenos Aires', 'Cordoba', 'Mendoza'],
         prefix: '54',
@@ -155,6 +164,7 @@ function App ( dato ) {
         name="nombre"
         label="Nombre"
         tooltip="What do you want others to call you?"
+        initialValue={dato}
         rules={[
           {
             required: true,
@@ -381,10 +391,11 @@ function App ( dato ) {
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
-          ((dato !== null && dato !== undefined && typeof dato === 'number') ?
-          Registrar :
-          Modificar
-          )
+          {
+            (dato !== null && dato !== undefined && typeof dato === 'number') ?
+              "Registrar" :
+              "Modificar"
+          }
         </Button>
       </Form.Item>
 

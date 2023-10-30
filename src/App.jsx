@@ -5,6 +5,7 @@ import NotFound from './modules/NotFound'
 import Login from './modules/Login'
 import Register from './modules/Register'
 import Pagos from './modules/Pagos'
+import Logout from './modules/Logout'
 
 import Personal from './modules/Personal'
 import AltaPersonal from './modules/Personal/AltaPersonal'
@@ -14,8 +15,8 @@ import AgendaMedico from './modules/Personal/Agenda/Medico'
 import AgendaAlta from './modules/Personal/Agenda/Alta'
 
 import Paciente from './modules/Paciente'
-import AltaPaciente from './modules/Paciente/AltaPaciente'
-import EditarPaciente from './modules/Paciente/Edicion'
+import AltaPaciente from './modules/Register'
+import EditarPaciente from './modules/Register'
 import MostrarPaciente from './modules/Paciente/Mostrar'
 
 import Turnos from './modules/Turnos'
@@ -35,6 +36,7 @@ function App() {
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
             <Route path='pagos' element={<Pagos />} />
+            <Route path='logout' element={<Logout />} />
             <Route path='personal' >
               <Route index element={<Personal />} />
               <Route path='alta' element={<AltaPersonal />} />
@@ -53,7 +55,7 @@ function App() {
               <Route index element={<Paciente />} />
               <Route path='alta' element={<AltaPaciente />} />
               <Route path='editar' >
-                <Route path=':paciente' element={<EditarPaciente />} />
+                <Route path=':paciente' element={<EditarPaciente  />} />
               </Route>
               <Route path=':paciente' element={<MostrarPaciente />} />
             </Route>
