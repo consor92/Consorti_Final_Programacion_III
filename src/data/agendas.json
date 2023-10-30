@@ -14,9 +14,9 @@
                 "citas": [
                     {
                         "idRecord": 1,
-                        "idTurno": 1001,
+                        "idTurno": 1001,    
                         "hora": "20:30:00",
-                        "consultorio": "301",
+                        "consultorio": 301,
                         "paciente": 1,
                         "type": "error"
                     },
@@ -24,9 +24,9 @@
                         "idRecord": 2,
                         "idTurno": 1002,
                         "hora": "21:00:00",
-                        "consultorio": "301",
+                        "consultorio": 301,
                         "paciente": 2,
-                        "type": "error"
+                        "type": "success"
                     },
                     {
                         "idRecord": 3,
@@ -34,7 +34,7 @@
                         "hora": "21:30:00",
                         "consultorio": 301,
                         "paciente": "",
-                        "type": "success"
+                        "type": "warning"
                     }
                 ]
             },
@@ -58,13 +58,13 @@
                         "hora": "21:00:00",
                         "consultorio": 301,
                         "paciente": 2,
-                        "type": "error"
+                        "type": "success"
                     },
                     {
                         "idRecord": 3,
                         "idTurno": 1006,
                         "hora": "21:30:00",
-                        "consultorio": "301",
+                        "consultorio": 301,
                         "paciente": 3,
                         "type": "error"
                     }
@@ -82,7 +82,7 @@
                         "hora": "20:30:00",
                         "consultorio": 301,
                         "paciente": 1,
-                        "type": "error"
+                        "type": "success"
                     },
                     {
                         "idRecord": 2,
@@ -98,7 +98,7 @@
                         "hora": "21:30:00",
                         "consultorio": 301,
                         "paciente": "",
-                        "type": "success"
+                        "type": "warning"
                     }
                 ]
             },
@@ -130,7 +130,7 @@
                         "hora": "21:30:00",
                         "consultorio": 301,
                         "paciente": "",
-                        "type": "success"
+                        "type": "warning"
                     }
                 ]
             },
@@ -192,14 +192,14 @@
                         "hora": "20:30:00",
                         "consultorio": 301,
                         "paciente": "",
-                        "type": "success"
+                        "type": "warning"
                     },
                     {
                         "idRecord": 2,
                         "idTurno": 1017,
                         "hora": "21:00:00",
                         "consultorio": 301,
-                        "paciente": "",
+                        "paciente": 1,
                         "type": "success"
                     },
                     {
@@ -208,7 +208,7 @@
                         "hora": "21:30:00",
                         "consultorio": 301,
                         "paciente": "",
-                        "type": "success"
+                        "type": "warning"
                     }
                 ]
             },
@@ -224,14 +224,14 @@
                         "hora": "20:30:00",
                         "consultorio": 301,
                         "paciente": "",
-                        "type": "success"
+                        "type": "warning"
                     },
                     {
                         "idRecord": 2,
                         "idTurno": 1020,
                         "hora": "21:00:00",
                         "consultorio": 301,
-                        "paciente": "",
+                        "paciente": 2,
                         "type": "success"
                     },
                     {
@@ -240,7 +240,7 @@
                         "hora": "21:30:00",
                         "consultorio": 301,
                         "paciente": "",
-                        "type": "success"
+                        "type": "warning"
                     }
                 ]
             }
@@ -266,27 +266,27 @@
                 "citas": [
                     {
                         "idRecord": 1,
-                        "idTurno": 7,
+                        "idTurno": 1022,
                         "hora": "20:30:00",
                         "consultorio": 301,
-                        "paciente": "",
+                        "paciente": 1,
                         "type": "success"
                     },
                     {
                         "idRecord": 2,
-                        "idTurno": 8,
+                        "idTurno": 1023,
                         "hora": "21:00:00",
                         "consultorio": 301,
-                        "paciente": "",
-                        "type": "success"
+                        "paciente":1,
+                        "type": "error"
                     },
                     {
                         "idRecord": 3,
-                        "idTurno": 9,
+                        "idTurno": 1024,
                         "hora": "21:30:00",
                         "consultorio": 301,
-                        "paciente": "",
-                        "type": "success"
+                        "paciente": 2,
+                        "type": "error"
                     }
                 ]
             },
@@ -298,27 +298,27 @@
                 "citas": [
                     {
                         "idRecord": 1,
-                        "idTurno": 10,
+                        "idTurno": 1025,
                         "hora": "20:30:00",
                         "consultorio": 301,
                         "paciente": "",
-                        "type": "success"
+                        "type": "warning"
                     },
                     {
                         "idRecord": 2,
-                        "idTurno": 11,
+                        "idTurno": 1026,
                         "hora": "21:00:00",
                         "consultorio": 301,
                         "paciente": "",
-                        "type": "success"
+                        "type": "warning"
                     },
                     {
                         "idRecord": 3,
-                        "idTurno": 12,
+                        "idTurno": 1027,
                         "hora": "21:30:00",
                         "consultorio": 301,
-                        "paciente": "",
-                        "type": "success"
+                        "paciente": 3,
+                        "type": "error"
                     }
                 ]
             }

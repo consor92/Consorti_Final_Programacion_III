@@ -1,4 +1,4 @@
-import { EditFilled, BookFilled, SearchOutlined } from '@ant-design/icons';
+import { EditFilled, SearchOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom'
 import React, { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
