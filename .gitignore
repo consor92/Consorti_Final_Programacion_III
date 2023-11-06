@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# npm debugging logs
+npm-debug.log
+
+# Logs
+logs
+
+# Environment variables
+.env
+.env.development
