@@ -20,7 +20,7 @@ import EditarPaciente from './modules/Register'
 import MostrarPaciente from './modules/Paciente/Mostrar'
 
 import Turnos from './modules/Turnos'
-import byPaciente from './modules/Turnos/ListarPorPaciente'
+import ByPaciente from './modules/Turnos/ListarPorPaciente'
 import AltaTurno from './modules/Turnos/Alta'
 import ModificarTurno from './modules/Turnos/Edicion'
 import CancelarTurno from './modules/Turnos/Baja'
@@ -55,13 +55,13 @@ function App() {
               <Route index element={<Paciente />} />
               <Route path='alta' element={<AltaPaciente />} />
               <Route path='editar' >
-                <Route path=':paciente' element={<EditarPaciente  />} />
+                <Route path=':paciente' element={<EditarPaciente />} />
               </Route>
               <Route path=':paciente' element={<MostrarPaciente />} />
             </Route>
             <Route path='turnos'>
               <Route index element={<Turnos />} />
-              <Route path=':paciente' element={<byPaciente />} />
+              <Route path=':paciente' element={<ByPaciente />} />
               <Route path='solicitud' element={<AltaTurno />} />
               <Route path='editar'>
                 <Route index element={<Turnos />} />
@@ -69,7 +69,9 @@ function App() {
               </Route>
               <Route path='cancelar'>
                 <Route index element={<Turnos />} />
-                <Route path=':turno' element={<CancelarTurno />} />
+                <Route path=':turno' >
+                  <Route path=':paciente' element={<CancelarTurno />} />
+                </Route>
               </Route>
             </Route>
             <Route path='*' element={<NotFound />} />

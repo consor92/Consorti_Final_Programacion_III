@@ -2,6 +2,7 @@
     {
         "matricula": 1101,
         "nombre": "Pedro",
+        "role": "000000000000000002",
         "apellido": "Garcia",
         "email": "pedro@gmail.com",
         "pass": "Asdfghjk1",

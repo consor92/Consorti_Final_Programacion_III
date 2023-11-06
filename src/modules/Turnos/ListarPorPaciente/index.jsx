@@ -1,13 +1,17 @@
 import { useParams } from 'react-router-dom'
 
+import DatosPaciente from '../../Paciente'
+
+
 function ListarPorPacientes() {
 
   const { paciente } = useParams()
+
     return (
-      <div>
-        <h1>Turnos de un paciente</h1>
-        {paciente && <h2>Type {paciente}</h2>}
-      </div>
+     
+     
+        <h1>hola</h1>
+
     )
   }
   

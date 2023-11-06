@@ -12,3 +12,6 @@
     -el register no esta recibiendo el dato para completar
     -setDataSource(update) en Agenda/alta no actualiza el DataSource ( lo hace tarde, en el Submit se ve bien no se potque)
     -el filtro por estado de turno solo filtra por el estado y rompe el resto de filtros
+
+
+    * cambiar el idDia para que sea unico en todos lados y cambiar en las tablas para q genere un key solo

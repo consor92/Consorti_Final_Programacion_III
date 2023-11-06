@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom'
-import { Button, Input, Table, Space, Tag } from 'antd';
-import { EyeTwoTone, SearchOutlined } from '@ant-design/icons'
+import { Button, Input, Table, Space, Tag, Flex } from 'antd';
+import { EyeTwoTone, SearchOutlined, PlusCircleTwoTone ,DeleteTwoTone } from '@ant-design/icons'
 import Agenda from '../../data/agendas.json'
 import dayjs from 'dayjs';
 
@@ -11,10 +11,6 @@ import dayjs from 'dayjs';
 const Turnos = () => {
 
   const { medico } = useParams()
-
-
-
-
 
 
   const [searchText, setSearchText] = useState('');
@@ -203,7 +199,7 @@ const Turnos = () => {
       width: '15%',
       ...getColumnSearchProps('apellido'),
       render: (text, record) => {
-        return record.nombre + ' ' + record.apellido;
+        return  record.nombre + ' ' + record.apellido;
       },
     },
     {
@@ -254,12 +250,20 @@ const Turnos = () => {
     {
       title: 'Citas',
       dataIndex: 'operation',
+      width: '5%',
       render: (_, record) =>
         dataSource.length >= 1 && record.paciente !== ""
           ? (
-            <Link to={`paciente/${record.paciente}`}> <EyeTwoTone /> </Link>
-          ) : null,
-      width: '5%',
+            <Flex justify="space-evenly" >
+              <Link to={`/paciente/${record.paciente}`}> <EyeTwoTone /> </Link>
+              <Link to={`/turnos/baja/${record.idTurno}/${record.paciente}`}> <DeleteTwoTone /> </Link>
+            </Flex>
+
+          ) : (
+            <Flex justify="center" >
+              <Link to={`/turnos/alta/${record.idTurno}`}> <PlusCircleTwoTone /> </Link>
+            </Flex>
+          )
     }
   ];
 
