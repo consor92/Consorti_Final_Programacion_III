@@ -1,78 +1,17 @@
 import React from 'react';
-import {
-  UploadOutlined,
-  UserOutlined,
-  DeleteOutlined,
-  BarsOutlined,
-  PlusOutlined,
-  HomeOutlined,
-  TeamOutlined,
-  EditOutlined,
-  DollarOutlined,
-  PoweroffOutlined,
-  LoginOutlined,
-  CustomerServiceOutlined,
-  CommentOutlined ,
-  IdcardOutlined,
-  SearchOutlined
-} from '@ant-design/icons';
 
-import { Outlet, Link } from 'react-router-dom'
-import { Layout, Menu, theme ,FloatButton  } from 'antd';
+
+import { Outlet } from 'react-router-dom'
+import { Layout, Menu, theme   } from 'antd';
 import Ruta from './Navegacion'
+import {  itemAdmin , itemMedico , itemPaciente , roleLocalStorage } from './Navegacion/restriccionesRoles'
 
 const { Header, Content, Footer, Sider } = Layout;
 
-function getItem(label, key, icon, children) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  }
-}
 
 
-
-
-const item = [
-  getItem(<Link to="/login"> Login </Link>, '1', <LoginOutlined />),
-  getItem(<Link to="/register"> register </Link>, '2', <IdcardOutlined />),
-  getItem(<Link to="/pagos"> pagos </Link>, '3', <DollarOutlined />),
-  getItem(<Link> personal </Link>, '4', <BarsOutlined />,
-    [
-      getItem(<Link to="/personal"> Mostrar </Link>, '5', <SearchOutlined />),
-      getItem(<Link to="/personal/3"> Editar </Link>, '6', <EditOutlined />),
-      getItem(<Link to="/personal/alta"> Agregar </Link>, '7', <PlusOutlined />)
-    ]),
-  getItem(<Link> Agendas </Link>, '8', <BarsOutlined />,
-    [
-      getItem(<Link to="/personal/agenda"> Todas las Agenda </Link>, '9', <SearchOutlined />),
-      getItem(<Link to="/personal/agenda/agregar/2"> Nueva Agenda </Link>, '10', <PlusOutlined />),
-      getItem(<Link to="/personal/agenda/5"> Agenda Medica </Link>, '11', <EditOutlined />),
-    ]),
-  getItem(<Link> Pacientes </Link>, '12', <BarsOutlined />,
-    [
-      getItem(<Link to="/paciente"> Mostrar Todos </Link>, '13', <SearchOutlined />),
-      getItem(<Link to="/paciente/1"> Paciente </Link>, '14', <SearchOutlined />),
-      getItem(<Link to="/paciente/alta"> Alta </Link>, '15', <PlusOutlined />),
-      getItem(<Link to="/paciente/Editar/2"> Editar (S) </Link>, '16', <EditOutlined />)
-    ]),
-  getItem(<Link> Turnos </Link>, '17', <BarsOutlined />,
-    [
-      getItem(<Link to="/turnos"> Mostrar Todos </Link>, '18', <SearchOutlined />),
-      getItem(<Link to="/turnos/66"> Paciente (S) </Link>, '19', <SearchOutlined />),
-      getItem(<Link to="/turnos/solicitud"> Otorgar </Link>, '20', <PlusOutlined />),
-      getItem(<Link to="/turnos/editar"> Modificar </Link>, '21', <EditOutlined />),
-      getItem(<Link to="/turnos/editar/32"> Modifiar (S) </Link>, '22', <EditOutlined />),
-      getItem(<Link to="/turnos/cancelar"> cancelar </Link>, '23', <DeleteOutlined />),
-      getItem(<Link to="/turnos/cancelar/21"> Cancelar (S) </Link>, '24', <DeleteOutlined />)
-
-    ]),
-  getItem(<Link to="/logout"> LogOut </Link>, '25', <PoweroffOutlined />)
-]
-
-
+const role = 'medico'
+const item = role === 'admin' ? itemAdmin : role === 'medico' ? itemMedico : role === 'paciente' ? itemPaciente : '';
 
 const App = () => {
   const {

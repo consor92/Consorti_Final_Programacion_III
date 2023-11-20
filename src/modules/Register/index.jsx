@@ -139,8 +139,8 @@ function App() {
 
   if (dato) {
     console.log("Dato:" + dato.paciente)
-    handleFinish = (dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === 'number') ? onFinishEdit : null
-    handleName = (dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === 'number') ? "edit" : null
+    const handleFinish = (dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === 'number') ? onFinishEdit : null
+    const handleName = (dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === 'number') ? "edit" : null
   }
 
   return (

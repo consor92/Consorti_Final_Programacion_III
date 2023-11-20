@@ -15,3 +15,6 @@
 
 
     * cambiar el idDia para que sea unico en todos lados y cambiar en las tablas para q genere un key solo
+
+    -en App si no se encunetra el LocalStorage es que no esta logiado y el NavigateUse no anda tira error
+    -en la navegacion  no funciona el ${ matricula}  errores en el hook
