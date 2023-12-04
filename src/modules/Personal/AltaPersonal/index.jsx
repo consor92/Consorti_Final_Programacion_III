@@ -185,7 +185,7 @@ function AltaPersonal() {
                   ''
       });
 
-      //setIsState(0);
+      setIsState(0);
     }
   }, [isState]);
 

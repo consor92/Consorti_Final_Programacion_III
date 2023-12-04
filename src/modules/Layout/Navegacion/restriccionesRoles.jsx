@@ -206,7 +206,7 @@ const generateKey = (parentKey, index) => parentKey ? `${parentKey}-${index + 1}
 
 export const itemAdmin = [
   getItem(<Link to="/dashboard"> Home  </Link>, <HomeOutlined />),
-  getItem(<Link to="/register"> register </Link>, <IdcardOutlined />),
+  getItem(<Link to="/register"> Nuevo Paciente </Link>, <IdcardOutlined />),
   getItem(<Link to="/pagos"> pagos </Link>, <DollarOutlined />),
   getItem(<Link> personal </Link>, <BarsOutlined />,
     [
@@ -218,7 +218,7 @@ export const itemAdmin = [
     [
       getItem(<Link to="/personal/agenda"> Todas las Agenda </Link>, <SearchOutlined />),
       getItem(<Link to={`/personal/agenda/agregar/${localStorageId()}`}> Nueva Agenda </Link>, <PlusOutlined />),
-      getItem(<Link to="/personal/agenda/5"> Agenda Medica </Link>, <EditOutlined />),
+      getItem(<Link to={`/personal/agenda/${localStorageId()}`}> Agenda Medica </Link>, <EditOutlined />),
     ]),
   getItem(<Link> Pacientes </Link>, <BarsOutlined />,
     [
@@ -259,7 +259,7 @@ export const itemMedico = [
     [
       getItem(<Link to="/personal/agenda"> Todas las Agenda </Link>, <SearchOutlined />),
       getItem(<Link to={`/personal/agenda/agregar/${localStorageId()}`}> Nueva Agenda </Link>, <PlusOutlined />),
-      getItem(<Link to="/personal/agenda/5"> Agenda Medica </Link>, <EditOutlined />),
+      getItem(<Link to={`/personal/agenda/${localStorageId()}`}> Agenda Medica </Link>, <EditOutlined />),
     ]),
   getItem(<Link> Pacientes </Link>, <BarsOutlined />,
     [

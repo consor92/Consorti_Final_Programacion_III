@@ -107,6 +107,7 @@ const AltaPaciente = () => {
   const [ultimoTurno, setUltimoTurno] = useState(0);
   const [ultimoDia, setUltimoDia] = useState(0);
 
+
   const transformarAgenda = (agenda) => {
     const nuevaEstructura = [];
 
@@ -141,7 +142,7 @@ const AltaPaciente = () => {
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        const response = await agendaService.getAgenda(medico.medico);
+        const agenda = await agendaService.getAgenda(medico.medico);
         const turnoDisp = await agendaService.getTurnos();
         const diasDisp = await agendaService.getDias();
 
@@ -153,13 +154,12 @@ const AltaPaciente = () => {
           return dia.idDia > maxIdDia ? dia.idDia : maxIdDia;
         }, 0);
 
-        const transformedData = transformarAgenda(response[0]);
+        const transformedData = transformarAgenda(agenda[0]);
 
         setDataSource(transformedData);
         setCount(dataSource.length + 1)
         setUltimoTurno(maxTurno + 1)
         setUltimoDia(maxDia + 1)
-
 
       } catch (error) {
         console.error(error);
@@ -306,8 +306,9 @@ const AltaPaciente = () => {
     });
 
 
+  //cada dia agregado hya que agregarlo al array de agenda disponibilidad.citas
   async function editar(cita) {
-    console.log('cita:', cita)
+    console.log('cita:', cita , 'Actual:' , medico.medico )
 
     //let turnoDisp 
     let diasDisp
@@ -322,6 +323,8 @@ const AltaPaciente = () => {
         cita.citas = { id: [ resultadoAgregarTurnos ] };
 
         diasDisp = await agendaService.addDia(cita);
+        diasDisp = await agendaService.editAgenda(medico.medico , { disponibilidad: { id_dias: [diasDisp._id] } });
+
         console.log('Dia-add:', diasDisp._id);
       } else {
         /*

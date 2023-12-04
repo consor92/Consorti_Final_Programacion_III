@@ -182,13 +182,13 @@ const MostrarPaciente = () => {
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        const response = await userService.getAllMedicos();
+        const medicos = await userService.getAllMedicos();
 
         
-        const datosPromises = response.map(async item => {
+        const datosPromises = medicos.map(async item => {
           const { localidad, sanatorio, pref, especialidad, role, ...resto } = item;
           const agenda = await agendaService.getAgenda(item._id);
-          //console.log('aa', item._id)
+          //console.log('aa', agenda , item._id)
           return {
             ...resto,
             localidad: localidad ? localidad.provincia : '',

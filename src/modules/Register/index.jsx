@@ -17,7 +17,7 @@ import {
   notification
 } from 'antd';
 
-
+const { Option } = Select;
 
 
 const tailFormItemLayout = {
@@ -441,9 +441,9 @@ function App() {
           ]}
         >
           <Select placeholder="Genero">
-            <Option value="Masculino">Masculino</Option>
-            <Option value="Femenino">Femenino</Option>
-            <Option value="Otro">Otro</Option>
+            <Select.Option value="Masculino">Masculino</Select.Option>
+            <Select.Option value="Femenino">Femenino</Select.Option>
+            <Select.Option value="Otro">Otro</Select.Option>
           </Select>
         </Form.Item>
 
