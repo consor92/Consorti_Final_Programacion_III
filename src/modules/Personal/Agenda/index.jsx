@@ -1,10 +1,11 @@
 import { EditFilled, SearchOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom'
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Input, Space, Table, Tag  } from 'antd';
-import datos from '../../../data/agendas.json'
+import { Button, Input, Space, Table, Tag } from 'antd';
 
+//import datos from '../../../data/agendas.json'
+import agendaService from '../../../service/agenda';
 
 
 const rowSelection = {
@@ -23,6 +24,32 @@ const Agenda = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
+
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [datos, setAgenda] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      try {
+        const response = await agendaService.getAllAgendas();
+
+        setAgenda(response);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false)
+        return [];
+      }
+      setIsLoading(false)
+    };
+
+    fetchData().then((data) => {
+      //console.log('datos:', datos)
+    });
+
+  }, []);
+
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -130,6 +157,15 @@ const Agenda = () => {
       ),
   });
 
+  const getColorForTag = (tag) => {
+    if (tag.length > 9) {
+      return 'green';
+    } else if (tag === 'Cancelada') {
+      return 'volcano';
+    } else {
+      return 'geekblue';
+    }
+  };
 
   const columns = [
     {
@@ -138,7 +174,7 @@ const Agenda = () => {
       key: 'apellido',
       width: '20%',
       ...getColumnSearchProps('apellido'),
-      render: (_,record) =><Link to={`/personal/${record.key}`}> {record.apellido} </Link>
+      render: (_, record) => <Link to={`/personal/${record.idUser}`}> {record.apellido} </Link>
     },
     {
       title: 'Nombre',
@@ -168,27 +204,29 @@ const Agenda = () => {
       dataIndex: 'tags',
       render: (_, { tags }) => (
         <>
-          {tags.map((tag) => {
-            let color = tag.length > 9 ? 'green' : 'geekblue';
-            if (tag === 'Cancelada') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
+          {Array.isArray(tags) ? (
+            // Si tags es un array
+            tags.map((tag) => (
+              <Tag color={getColorForTag(tag)} key={tag}>
                 {tag.toUpperCase()}
               </Tag>
-            );
-          })}
+            ))
+          ) : (
+            // Si tags es una cadena
+            <Tag color={getColorForTag(tags)} key={tags}>
+              {tags.toUpperCase()}
+            </Tag>
+          )}
         </>
       ),
-    },    
+    },
     {
       title: 'Action',
       dataIndex: 'operation',
       key: 'operation',
-      render: (_,record) => (
+      render: (_, record) => (
         <Space size="middle">
-          <Link to={`/personal/Agenda/${record.key}`}> <EditFilled /> </Link>
+          <Link to={`/personal/Agenda/${record.idUser}`}> <EditFilled /> </Link>
         </Space>
       ),
     },
@@ -207,7 +245,9 @@ const Agenda = () => {
     expandable={{
       expandedRowRender: (record) => (
         <Space size="middle">
-          {record.description}
+          <p>
+            {record.descripcion}
+          </p>
         </Space>
       ),
       rowExpandable: (record) => record.description !== '',

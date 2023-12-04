@@ -9,11 +9,17 @@ import {  itemAdmin , itemMedico , itemPaciente , roleLocalStorage } from './Nav
 const { Header, Content, Footer, Sider } = Layout;
 
 
+const App = () => {
 
-const role = 'medico'
+let role = roleLocalStorage()
+
+  if (role && role.user) {
+    role = role.user.role
+  }
+
 const item = role === 'admin' ? itemAdmin : role === 'medico' ? itemMedico : role === 'paciente' ? itemPaciente : '';
 
-const App = () => {
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();

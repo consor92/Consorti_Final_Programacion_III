@@ -88,20 +88,45 @@ const EditableCell = ({
 
 
 
+
 //componente, ( datos del row seleccionado) , (acceco a la funcion cerrar modal) , (tranferencia de datos al padre)   
-const Horarios = ({ records, cerrar , sendDataToParent }) => {
+const Horarios = ({ records, cerrar, sendDataToParent }) => {
 
-    const data = records.citas
-        .map(cita => {
-            const { idRecord, ...rest } = cita;
-            return { ...rest, key: idRecord };
-        });
+    /*
+    const data = (records.citas || []).map(cita => {
+        const { idRecord,  turnoDisponible , ...rest } = cita;
+        return { ...rest, key: idRecord  };
+    });
+    */
 
+    const [dataSource, setDataSource] = useState([]);
+    const [count, setCount] = useState(dataSource.length + 1);
+    const [turno, setIdTurno] = useState(  dataSource.length > 0 ? dataSource[dataSource.length - 1].idTurno + 1 : records.turnoDisponible);
 
-    const [dataSource, setDataSource] = useState(data);
-    const [count, setCount] = useState(data.length + 1);
-    const [turno, setIdTurno] = useState( data[data.length-1].idTurno + 1 );
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
 
+            const data = (records.citas || []).map(cita => {
+                const { idRecord,  turnoDisponible , ...rest } = cita;
+                return { ...rest, key: idRecord  };
+            });
+
+            setDataSource(data);
+            setCount(data.length + 1)
+            setIdTurno( dataSource.length > 0 ? dataSource[dataSource.length - 1].idTurno + 1 : records.turnoDisponible ) 
+          } catch (error) {
+            console.error('Error al obtener datos:', error);
+            setDataSource([]); // Otra opción es manejar el error de alguna manera específica para tu aplicación
+          }
+        };
+    
+        fetchData();
+      }, [records.citas]);
+    
+
+    
+    //console.log( 'a', dataSource )
 
     const handleDelete = (key) => {
         const newData = dataSource.filter((item) => item.key !== key);
@@ -225,12 +250,12 @@ const Horarios = ({ records, cerrar , sendDataToParent }) => {
             cerrar()
 
             const dataCompleta = {
-                idDia: records.key, 
+                idDia: records.key,
                 citas: dataSource.map(cita => {
-                  const { idRecord, ...rest } = cita;
-                  return { ...rest, key: idRecord };
+                    const { idRecord, ...rest } = cita;
+                    return { ...rest, key: idRecord };
                 })
-              };
+            };
 
             sendDataToParent(dataCompleta);
         });
@@ -258,6 +283,8 @@ const Horarios = ({ records, cerrar , sendDataToParent }) => {
                 name={"editarHorarios"}
                 onFinish={onSave}
             >
+
+
 
                 <Table
                     components={components}

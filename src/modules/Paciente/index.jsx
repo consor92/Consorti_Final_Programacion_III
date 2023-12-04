@@ -1,9 +1,12 @@
 import { EditFilled, BookFilled, SearchOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom'
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Highlighter from 'react-highlight-words';
 import { Button, Input, Space, Table, Tag, Modal } from 'antd';
-import datos from '../../data/pacientes.json'
+
+
+//import datos from '../../data/pacientes.json'
+import userService from '../../service/user'
 import ListaPacientes from '../Paciente/Mostrar'
 
 
@@ -193,13 +196,51 @@ const Pacientes = () => {
       key: 'operation',
       render: (_, record) => (
         <Space size="middle">
-          <Link to={`/Paciente/Editar/${record.id}`}> <EditFilled /> </Link>
-          <Link to={`/Turnos/Alta/${record.id}`}> <EditFilled /> </Link>
-          <Link to={`/Turnos/ListaPorPaciente/${record.id}`}> <EditFilled /> </Link>
+          <Link to={`/Paciente/Editar/${record._id}`}> <EditFilled /> </Link>
+          <Link to={`/Turnos/Alta/${record._id}`}> <EditFilled /> </Link>
+          <Link to={`/Turnos/ListaPorPaciente/${record._id}`}> <EditFilled /> </Link>
         </Space>
       ),
     },
   ];
+
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [datos, setPacientes] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      try {
+        const pacientes = await userService.getAllPacientes();
+
+
+        const datosPromises = await Promise.all(pacientes.map( item => {
+          const { localidad, cobertura, pref,  role, ...resto } = item;
+
+          return {
+            ...resto,
+            localidad: localidad ? localidad.provincia : '',
+            cobertura: cobertura ? cobertura.value : '',
+            pref: pref ? pref.pref : '',
+            role: role ? role.name : '',
+          };
+        }));
+
+        setPacientes(datosPromises);
+      } catch (error) {
+        setIsLoading(false)
+        return [];
+      }
+      setIsLoading(false)
+    };
+
+    fetchData().then((data) => {
+      console.log('llamada:', datos)
+    });
+
+  }, []);
+
 
 
 

@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const api = axios.create({
   baseURL: 'http://localhost:4000/',
-  timeout: 1000 * 20, // 15 sec
+  timeout: 1000 * 15, // 15 sec
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ api.interceptors.request.use(
 
       if (storedData) {
         // Si hay datos almacenados, establece el token en las cabeceras de la solicitud
-        config.headers.Authorization = storedData.token;
+        config.headers.Authorization = `Bearer ${storedData.token}`;
       }
   
       return config;
@@ -30,12 +30,26 @@ api.interceptors.request.use(
  
   api.interceptors.response.use(
     (response) => {
-      // Hacer algo con la respuesta antes de devolverla
       return response.data;
     },
     (error) => {
-      // Hacer algo con el error antes de rechazar la promesa
-      console.error('Error en la respuesta:', error);
+      const { response } = error;
+  
+      if (response) {
+        switch (response.status) {
+          case 401:
+            console.error('Error 401: Usuario no autorizado.');
+            break;
+          case 404:
+            console.error('Error 404: Recurso no encontrado.');
+            break;
+          default:
+            console.error(`Error ${response.status}: Ocurrió un error inesperado.`);
+        }
+      } else {
+        console.error('Error en la solicitud:', error.message);
+      }
+  
       return Promise.reject(error);
     }
   );

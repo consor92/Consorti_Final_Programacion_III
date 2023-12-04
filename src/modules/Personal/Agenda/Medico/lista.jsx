@@ -55,7 +55,7 @@ const App = ({ availabilityData }) => {
 
 
                         <Modal
-                            open={false}
+                            open={modalPaciente}
                             onOk={() => setModalPaciente(false)}
                             onCancel={() => setModalPaciente(false)}
                             width={"80%"}

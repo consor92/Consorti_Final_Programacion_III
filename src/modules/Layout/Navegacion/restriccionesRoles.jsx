@@ -60,12 +60,12 @@ export const roleLocalStorage = () => {
   //const navigate = useNavigate();
 
   useEffect(() => {
-    
+
     const fetchUserRole = async () => {
       const storedUserDataString = localStorage.getItem('userData');
       const storedUserData = storedUserDataString ? JSON.parse(storedUserDataString) : null;
 
-      if (storedUserData) {
+      if (storedUserData && storedUserData.user) {
         setRole(storedUserData.user.role);
       } else {
         console.error('No se pudo obtener el rol del usuario');
@@ -76,7 +76,7 @@ export const roleLocalStorage = () => {
     fetchUserRole(); // Llamar a la función de obtención de roles
   }, []);
 
-  return role ;
+  return  role;
 };
 
 
@@ -206,19 +206,18 @@ const generateKey = (parentKey, index) => parentKey ? `${parentKey}-${index + 1}
 
 export const itemAdmin = [
   getItem(<Link to="/dashboard"> Home  </Link>, <HomeOutlined />),
-  getItem(<Link to="/login"> Login </Link>, <LoginOutlined />),
   getItem(<Link to="/register"> register </Link>, <IdcardOutlined />),
   getItem(<Link to="/pagos"> pagos </Link>, <DollarOutlined />),
   getItem(<Link> personal </Link>, <BarsOutlined />,
     [
       getItem(<Link to="/personal"> Mostrar </Link>, <SearchOutlined />),
-      getItem(<Link to="/personal/3"> Editar </Link>, <EditOutlined />),
+      //getItem(<Link to="/personal/3"> Editar </Link>, <EditOutlined />),
       getItem(<Link to="/personal/alta"> Agregar </Link>, <PlusOutlined />)
     ]),
   getItem(<Link> Agendas </Link>, <BarsOutlined />,
     [
       getItem(<Link to="/personal/agenda"> Todas las Agenda </Link>, <SearchOutlined />),
-      getItem(<Link to="/personal/agenda/agregar/2"> Nueva Agenda </Link>, <PlusOutlined />),
+      getItem(<Link to={`/personal/agenda/agregar/${localStorageId()}`}> Nueva Agenda </Link>, <PlusOutlined />),
       getItem(<Link to="/personal/agenda/5"> Agenda Medica </Link>, <EditOutlined />),
     ]),
   getItem(<Link> Pacientes </Link>, <BarsOutlined />,
@@ -242,7 +241,12 @@ export const itemAdmin = [
   getItem(<Link to="/logout"> LogOut </Link>, <PoweroffOutlined />)
 ].map((item, index) => ({ key: generateKey(null, index), ...item, children: item.children && item.children.map((child, childIndex) => ({ key: generateKey(index, childIndex), ...child })) }));
 
+function localStorageId() {
+  const storedUserDataString = localStorage.getItem('userData');
+  const storedUserData = storedUserDataString ? JSON.parse(storedUserDataString) : null;
 
+  return (storedUserData && storedUserData.user) ? storedUserData.user._id : ''
+}
 
 export const itemMedico = [
   getItem(<Link to="/dashboard"> Home  </Link>, <HomeOutlined />),
@@ -254,7 +258,7 @@ export const itemMedico = [
   getItem(<Link> Agendas </Link>, <BarsOutlined />,
     [
       getItem(<Link to="/personal/agenda"> Todas las Agenda </Link>, <SearchOutlined />),
-      getItem(<Link to={`/personal/agenda/agregar/111111`}> Nueva Agenda </Link>, <PlusOutlined />),
+      getItem(<Link to={`/personal/agenda/agregar/${localStorageId()}`}> Nueva Agenda </Link>, <PlusOutlined />),
       getItem(<Link to="/personal/agenda/5"> Agenda Medica </Link>, <EditOutlined />),
     ]),
   getItem(<Link> Pacientes </Link>, <BarsOutlined />,
@@ -286,12 +290,12 @@ export const itemPaciente = [
     [
       getItem(<Link to="/paciente/1"> Paciente </Link>, <SearchOutlined />),
     ]),
-  getItem(<Link> Turnos </Link>, <BarsOutlined />,
-    [
-      getItem(<Link to="/turnos"> Mostrar Todos </Link>, <SearchOutlined />),
-      getItem(<Link to="/turnos/solicitud"> Otorgar </Link>, <PlusOutlined />),
-      getItem(<Link to="/turnos/editar"> Modificar </Link>, <EditOutlined />),
-      getItem(<Link to="/turnos/cancelar"> cancelar </Link>, <DeleteOutlined />),
-    ]),
+  //getItem(<Link> Turnos </Link>, <BarsOutlined />,
+    //[
+     // getItem(<Link to="/turnos"> Mostrar Todos </Link>, <SearchOutlined />),
+     // getItem(<Link to="/turnos/solicitud"> Otorgar </Link>, <PlusOutlined />),
+     // getItem(<Link to="/turnos/editar"> Modificar </Link>, <EditOutlined />),
+     // getItem(<Link to="/turnos/cancelar"> cancelar </Link>, <DeleteOutlined />),
+    //]),
   getItem(<Link to="/logout"> LogOut </Link>, <PoweroffOutlined />)
 ].map((item, index) => ({ key: generateKey(null, index), ...item, children: item.children && item.children.map((child, childIndex) => ({ key: generateKey(index, childIndex), ...child })) }));

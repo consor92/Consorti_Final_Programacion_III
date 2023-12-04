@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import TerminosCondiciones from './Terminos&Condiciones'
-import residences from '../../data/localidades.json'
-import coberturasMedicas from '../../data/coberturasMedicas.json'
 
+
+import userService from '../../service/user'
+import coberturasService from '../../service/coberturas'
+import localidadService from '../../service/localidades'
 
 import {
   Button, DatePicker, Form, TimePicker, AutoComplete,
   Cascader,
   Checkbox,
   Modal,
-  Input, 
-  Select
+  Input,
+  Select,
+  notification
 } from 'antd';
 
-
-const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 
 
@@ -56,42 +56,59 @@ const formItemLayout = {
 
 
 
-
-const onFinish = (fieldsValue) => {
-  // Should format date value before submit.
-  const rangeValue = fieldsValue['range-picker'];
-  const rangeTimeValue = fieldsValue['range-time-picker'];
-  const values = {
-    ...fieldsValue,
-    'date-picker': fieldsValue['date-picker'].format('YYYY-MM-DD'),
-    'date-time-picker': fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
-    'month-picker': fieldsValue['month-picker'].format('YYYY-MM'),
-    'range-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')],
-    'range-time-picker': [
-      rangeTimeValue[0].format('YYYY-MM-DD HH:mm:ss'),
-      rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss'),
-    ],
-    'time-picker': fieldsValue['time-picker'].format('HH:mm:ss'),
-  };
-  console.log('Received values of form: ', values);
-};
-
-
-
-
-
 function App() {
+
+  const dato = useParams()
+
+
+  const [isState, setIsState] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
+  const [persona, setUser] = useState([]);
+  const [localidad, setLocalidad] = useState([]);
+  const [cobertura, setCoberturas] = useState([]);
+
+
   const [form] = Form.useForm();
 
-  const { dato } = useParams()
 
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+
+  const onFinish = async (fieldsValue) => {
+    const values = {
+      ...fieldsValue,
+      'nacimiento': fieldsValue['nacimiento'].format('YYYY-MM-DD')
+    };
+
+    values.localidad = values.localidad[0]
+    values.confirm = undefined
+    values.agreement = undefined
+    values.isActive = true,
+      values.role = "paciente",
+      values.saldo = 0
+
+
+    const cleanedFormData = Object.fromEntries(
+      Object.entries(values).filter(([_, value]) => value !== undefined && value !== null)
+    );
+
+
+
+    //console.log('Received values of form: ', cleanedFormData);
+
+    const resp = (await userService.addUser(cleanedFormData)).status;
+    setIsState(resp);
   };
 
-  const onFinishEdit = () => {
-    console.log('Received values of form: ', values);
+
+  const onFinishEdit = async (values) => {
+
+    const resp = (await userService.editarPaciente(dato.paciente, cleanedFormData)).status;
+
+    setIsState(resp);
+    //console.log('Received values of form: ', values);
   }
+
+
+
 
   const coberturaSelector = (
     <Form.Item name="cobertura" noStyle>
@@ -100,8 +117,8 @@ function App() {
           width: '8em'
         }}
       >
-        {coberturasMedicas.map((cobertura) => (
-          <Option key={cobertura.value} value={cobertura.value}>
+        {cobertura.map((cobertura) => (
+          <Option key={cobertura._id} value={cobertura._id}>
             {cobertura.label}
           </Option>
         ))}
@@ -114,13 +131,64 @@ function App() {
     <Form.Item name="prefix" noStyle>
       <Select
         style={{
-          width: 70,
+          width: 100,
         }}
       >
-        <Option value="54">+54</Option>
+        {localidad.map((option) => (
+          <Option key={option._id} value={option._id}>
+            {option.pref}
+          </Option>
+        ))}
       </Select>
     </Form.Item>
   );
+
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      try {
+
+        const respLoc = await localidadService.getLocalidad();
+        const respCobe = await coberturasService.getCobertura();
+
+        if (dato && dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === String) {
+          const paciente = await userService.getPaciente(dato.paciente)
+          const { localidad, cobertura, pref, role, ...resto } = paciente;
+          const pacienteModificado = {
+            ...resto,
+            localidad: localidad ? localidad.provincia : '',
+            cobertura: cobertura ? cobertura.value : '',
+            pref: pref ? pref.pref : '',
+            role: role ? role.name : '',
+          };
+          setUser(pacienteModificado)
+        }
+
+        setLocalidad(respLoc);
+        setCoberturas(respCobe);
+
+      } catch (error) {
+        setIsLoading(false)
+        return [];
+      }
+      setIsLoading(false)
+    };
+
+    fetchData().then((data) => {
+      //console.log('llamada:', persona)
+    });
+
+  }, []);
+
+  const getProvinciaOptions = () => {
+    return localidad.map((loc) => ({
+      value: loc._id,
+      label: loc.provincia,
+    }));
+  };
 
   const calculateAge = (birthdate) => {
     const today = new Date();
@@ -134,275 +202,294 @@ function App() {
     form.setFieldsValue({ edad: age });
   };
 
-  const handleName = "register"
-  const handleFinish = onFinish
+  const handleFinish = (dato && dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === String) ? onFinishEdit : onFinish;
+  const handleName = (dato && dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === String) ? "edit" : "register";
 
-  if (dato) {
-    console.log("Dato:" + dato.paciente)
-    const handleFinish = (dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === 'number') ? onFinishEdit : null
-    const handleName = (dato.paciente !== null && dato.paciente !== undefined && typeof dato.paciente === 'number') ? "edit" : null
-  }
+
+  const [api, contextHolder] = notification.useNotification();
+
+  useEffect(() => {
+    //console.log( isState )
+    if (isState != 0) {
+
+      api['success']({
+        message: (isState == 200) ? 'Todo OK' : "Algo salio Mal",
+        description:
+          (isState == 200) ?
+            'Se ah creado el usuario con los cambios descriptos' :
+            (isState == 403) ?
+              'NO autorizado' :
+              (isState == 404) ?
+                'Error 404' :
+                (isState >= 500) ?
+                  'Error interno del Servidor' :
+                  ''
+      });
+
+      setIsState(0);
+    }
+  }, [isState]);
 
   return (
 
-    <Form
-      {...formItemLayout}
-      form={form}
-      name={handleName}
-      onFinish={handleFinish}
-      initialValues={{
-        residence: ['Buenos Aires', 'Cordoba', 'Mendoza'],
-        prefix: '54',
-      }}
-      style={{
-        maxWidth: 600,
-      }}
-      scrollToFirstError
-    >
+    <>
 
-      <Form.Item
-        name="nombre"
-        label="Nombre"
-        tooltip="What do you want others to call you?"
-        initialValue={dato}
-        rules={[
-          {
-            required: true,
-            message: 'Please input your nickname!',
-            whitespace: true,
-          },
-        ]}
+      <Form
+        {...formItemLayout}
+        form={form}
+        name={handleName}
+        onFinish={handleFinish}
+        initialValues={{
+          localidad: persona.localidad,
+          pref: persona.pref,
+        }}
+        style={{
+          maxWidth: 600,
+        }}
+        scrollToFirstError
       >
-        <Input />
-      </Form.Item>
 
-      <Form.Item
-        name="apellido"
-        label="Apellido"
-        tooltip="What do you want others to call you?"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your nickname!',
-            whitespace: true,
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="email"
-        label="E-mail"
-        rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="password"
-        label="Password"
-        rules={[
-          {
-            required: true,
-            min: 8,
-            pattern: "^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$",
-            message: "La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. Puede tener otros símbolos.",
-          },
-        ]}
-        hasFeedback
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="confirm"
-        label="Confirm Password"
-        dependencies={['password']}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            min: 8,
-            pattern: "^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$",
-            message: "La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. Puede tener otros símbolos.",
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error('No coinciden.'));
+        <Form.Item
+          name="nombre"
+          label="Nombre"
+          tooltip="What do you want others to call you?"
+          initialValue={persona.nombre}
+          rules={[
+            {
+              required: true,
+              message: 'Please input your nickname!',
+              whitespace: true,
             },
-          }),
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        name="nickname"
-        label="Nickname"
-        tooltip="What do you want others to call you?"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your nickname!',
-            whitespace: true,
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          name="apellido"
+          label="Apellido"
+          tooltip="What do you want others to call you?"
+          initialValue={persona.apellido}
+          rules={[
+            {
+              required: true,
+              message: 'Please input your nickname!',
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        name="nacimiento"
-        label="Fecha de Nacimiento"
-        rules={[
-          {
-            type: 'object',
-            required: true
-          },
-        ]}
-      >
-        <DatePicker onChange={handleEdadChange} />
-      </Form.Item>
+        <Form.Item
+          name="email"
+          label="E-mail"
+          initialValue={persona.email}
+          rules={[
+            {
+              type: 'email',
+              message: 'The input is not valid E-mail!',
+            },
+            {
+              required: true,
+              message: 'Please input your E-mail!',
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        name="edad"
-        label="Edad"
-        hidden
-        initialValue=""
-        rules={[
-          {
-            type: 'number'
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[
+            {
+              required: true,
+              min: 8,
+              pattern: "^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{8,16}$",
+              message: "La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. Puede tener otros símbolos.",
+            },
+          ]}
+          hasFeedback
+        >
+          <Input.Password />
+        </Form.Item>
 
-      <Form.Item
-        name="residence"
-        label="Localidad"
-        rules={[
-          {
-            type: 'array',
-            required: true
-          },
-        ]}
-      >
-        <Cascader options={residences} />
-      </Form.Item>
+        <Form.Item
+          name="confirm"
+          label="Confirm Password"
+          dependencies={['password']}
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              min: 8,
+              pattern: "^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{8,16}$",
+              message: "La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula. Puede tener otros símbolos.",
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('No coinciden.'));
+              },
+            }),
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
 
-      <Form.Item
-        name="telefono"
-        label="Telefono"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your phone number!',
-          },
-        ]}
-      >
-        <Input
-          addonBefore={prefixSelector}
-          style={{
-            width: '100%',
-          }}
-        />
-      </Form.Item>
+        <Form.Item
+          name="nick"
+          label="Nickname"
+          initialValue={persona.nick}
+          tooltip="What do you want others to call you?"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your nickname!',
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        name="gender"
-        label="Gender"
-        rules={[
-          {
-            required: true
-          },
-        ]}
-      >
-        <Select placeholder="Genero">
-          <Option value="male">Male</Option>
-          <Option value="female">Female</Option>
-          <Option value="other">Other</Option>
-        </Select>
-      </Form.Item>
+        <Form.Item
+          name="dni"
+          label="DNI"
+          initialValue={persona.dni}
+          rules={[
+            {
+              pattern: /^[0-9]+$/,
+              required: true
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="nacimiento"
+          label="Fecha de Nacimiento"
+          initialValue={persona.nacimiento}
+          rules={[
+            {
+              type: 'object',
+              required: true
+            },
+          ]}
+        >
+          <DatePicker onChange={handleEdadChange} />
+        </Form.Item>
+
+        <Form.Item
+          name="edad"
+          label="Edad"
+          hidden
+          initialValue={persona.edad}
+          rules={[
+            {
+              type: 'number'
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="localidad"
+          label="Habitual Residence"
+          initialValue={persona.localidad}
+          rules={[
+            {
+              type: 'array'
+            },
+          ]}
+        >
+          <Cascader options={getProvinciaOptions()} />
+        </Form.Item>
+
+        <Form.Item
+          name="tel"
+          label="Telefono"
+          initialValue={persona.tel}
+          rules={[
+            {
+              required: true,
+              message: 'Please input your phone number!',
+            },
+          ]}
+        >
+          <Input
+            addonBefore={prefixSelector}
+            style={{
+              width: '100%',
+            }}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="genero"
+          label="Genero"
+          initialValue={persona.genero}
+          rules={[
+            {
+              required: true
+            },
+          ]}
+        >
+          <Select placeholder="Genero">
+            <Option value="Masculino">Masculino</Option>
+            <Option value="Femenino">Femenino</Option>
+            <Option value="Otro">Otro</Option>
+          </Select>
+        </Form.Item>
 
 
 
-      <Form.Item
-        name="numeroAfiliado"
-        label="Numero Afiliado"
-        rules={[
-          {
-            type: 'number',
-            required: true,
-            message: 'Numero de afiliacion',
-          },
-        ]}
-      >
-        <Input
-          addonBefore={coberturaSelector}
-          style={{
-            width: '100%',
-          }}
-        />
-      </Form.Item>
+        <Form.Item
+          name="numeroAfiliado"
+          label="Numero Afiliado"
+          initialValue={persona.numeroAfiliado}
+          rules={[
+            {
+              pattern: /^[0-9]+$/,
+              message: 'Numero de afiliacion'
+            },
+          ]}
+        >
+          <Input
+            addonBefore={coberturaSelector}
+            style={{
+              width: '100%',
+            }}
+          />
+        </Form.Item>
 
 
 
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        rules={[
-          {
-            validator: (_, value) =>
-              value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
-          },
-        ]}
-        {...tailFormItemLayout}
-      >
-        <Checkbox>
-          I have read the <a onClick={() => {
-            Modal.confirm({
-              title: 'Leer',
-              content: TerminosCondiciones.descripcion,
-              footer: (_, { OkBtn }) => (
-                <>
-                  <OkBtn />
-                </>
-              )
+        
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">
+            {
+              (dato && typeof dato === 'number') ?
+                "Modificar" :
+                "Registrar Paciente"
             }
-            )
-          }
-          }> Conditions </a>
+          </Button>
+        </Form.Item>
 
-        </Checkbox>
-      </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          {
-            (dato !== null && dato !== undefined && typeof dato === 'number') ?
-              "Registrar" :
-              "Modificar"
-          }
-        </Button>
-      </Form.Item>
+      </Form>
 
+      {isState != 0 ? contextHolder : ''}
 
+    </>
 
-
-    </Form>
   );
+
 };
 export default App;
+
+
