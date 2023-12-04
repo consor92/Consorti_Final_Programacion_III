@@ -8,7 +8,7 @@
     "format": "prettier --write '**/*.{js,json,md}'",
     "lint": "eslint . --ext .js",
     "migrate": "migrate-mongo",
-    "migrate-dev": "set NODE_ENV=production&& migrate-mongo"
+    "migrate-dev": "set NODE_ENV=production && migrate-mongo"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -24,7 +24,8 @@
     "mongoose": "^7.6.5",
     "mongoose-validator": "^2.1.0",
     "morgan": "~1.9.1",
-    "mongoose-sequence": "^5.3.1"
+    "mongoose-sequence": "^5.3.1",
+    "moment": "^2.29.1"
     
   },
   "devDependencies": {

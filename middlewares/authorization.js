@@ -3,11 +3,11 @@ function authorization(req, res, next) {
       return req.user && req.user.role === 'admin'
     }
   
-    req.isClient = function isClient() {
+    req.isMedico = function isMedico() {
       return req.user && req.user.role === 'medico'
     }
   
-    req.isClient = function isClient() {
+    req.isPaciente= function isPaciente() {
         return req.user && req.user.role === 'paciente'
       }
 

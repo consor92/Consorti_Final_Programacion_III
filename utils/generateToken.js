@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
- const fs = require('fs')
- const path = require('path')
+const fs = require('fs')
+const path = require('path')
 
 const Role = require('../schemas/role')
 

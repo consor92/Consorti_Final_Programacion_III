@@ -1,6 +1,6 @@
 const { Router } = require('express')
 
-const Pais = require('../schemas/paises')
+const { Pais, Localidades } = require('../schemas/paises')
 
 const router = new Router()
 

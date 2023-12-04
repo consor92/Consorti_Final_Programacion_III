@@ -16,4 +16,4 @@ const paisSchema = new Schema({
 const Localidades = mongoose.model('Localidades', localidadSchema);
 const Pais = mongoose.model('Pais', paisSchema);
 
-module.exports =  {Pais , Localidades} ;
+module.exports =  { Pais, Localidades };  

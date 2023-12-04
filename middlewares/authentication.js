@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken')
 const createError = require('http-errors')
-// const fs = require('fs')
-// const path = require('path')
+ const fs = require('fs')
+ const path = require('path')
 
 /* eslint-disable-next-line no-undef */
-// const publicKey = fs.readFileSync(path.join(__dirname, `../keys/base-api-express-generator.pub`))
+ const publicKey = fs.readFileSync(path.join(__dirname, `../keys/public.pub`))
 
 function getToken(req, next) {
   const TOKEN_REGEX = /^\s*Bearer\s+(\S+)/g
@@ -28,16 +28,17 @@ function authentication(req, res, next) {
 
   try {
     // Unsecure alternative
-    req.user = jwt.verify(token, 'key-publica', {
-      issuer: 'key-publica',
-    })
-
+      req.user = jwt.verify(token, 'key-publica', {
+        issuer: 'key-publica',
+      })
+    
     // Correct alternative
-    // req.user = jwt.verify(token, publicKey, {
-    //   algorithms: ['RS256'],
-    //   issuer: 'base-api-express-generator',
-    // })
-
+    /*
+     req.user = jwt.verify(token, publicKey, {
+       algorithms: ['RS256'],
+       issuer: 'key-publica',
+     })
+*/
     if (!req.user || !req.user._id || !req.user.role) {
       console.error('Error authenticating malformed JWT')
       return next(new createError.Unauthorized())

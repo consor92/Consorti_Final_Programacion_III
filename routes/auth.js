@@ -7,9 +7,9 @@ const generateUserToken = require('../utils/generateToken')
 
 const router = new Router()
 
-router.post('/login', createUserToken)
-router.post('/register' , createUser)
+router.post('/login', createUserToken)                                                                                  // localhost:4000/login                       -- POST ( pasa credenciales y devuelve TOKEN JWT )
 
+//----- POST -----
 async function createUserToken(req, res, next) {
     console.log(`Creando un nuevo TOKEN ${req.body.nick}`)
 
@@ -58,26 +58,6 @@ async function createUserToken(req, res, next) {
 
 }
 
-async function createUser(req, res, next) {
-    console.log('createUser: ', req.body)
-  
-    const user = req.body
-  
-    try {
-      const roles = await Role.find()
-      const role = await Role.findOne({ name: user.role })
-      if (!role) {
-        res.status(404).send('Role not found')
-      }
-  
-      const passEncrypted = await bcrypt.hash(user.password, 10)
-      
-      const userCreated = await User.create({ ...user, password: passEncrypted, role: role._id })
-  
-      res.send(userCreated)
-    } catch (err) {
-      next(err)
-    }
-  }
+
 
 module.exports = router

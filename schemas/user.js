@@ -11,7 +11,7 @@ const Generos = ['Masculino','Femenino','Otro']
 
 const userSchema = new Schema({
   email: {        type: String,    required: true,    unique: true,    lowercase: true,    trim: true,    validate: emailValidator,},
-  matricula: {    type: Number, required: false, unique: true, trim: true},
+  matricula: {    type: Number, required: false, trim: true},
   dni:{           type: Number, required:true ,  unique: true },
   password: {     type: String, required: true, select: false },
   role: {         type: ObjectId, ref: 'Role', required: true },
@@ -20,10 +20,11 @@ const userSchema = new Schema({
   tel: {          type: String , required: true , trim: true },
   pref: {         type: ObjectId, ref: 'Pais' },
   nick: {         type: String , unique: true, required: true, trim: true},
-  localidad: {    
+  localidad: {    type: ObjectId, ref: 'Pais' },
+  /*{    
     pais:{        type: ObjectId, ref: 'Pais' },
     recidencia:{   type: ObjectId, ref: 'Pais' }
-  },
+  },*/
   sanatorio:{     type: ObjectId, ref: 'Pais', required: false},
   nacimiento: {   type: Date},
   edad: {         type: Number , trim: true },
@@ -47,8 +48,8 @@ const userSchema = new Schema({
   isActive: {           type: Boolean, default: true }
 })
 
-userSchema.index({ 'matricula': 1, 'email': 1, 'nick': 1 , 'dni' : 1}, { unique: true })
-
+//userSchema.index({ 'matricula': 1, 'email': 1, 'nick': 1 , 'dni' : 1}, { unique: true })
+userSchema.index({ 'matricula': 1 }, { partialFilterExpression: { matricula: { $exists: true } } });
 
 userSchema.method('checkPassword', async function checkPassword(potentialPassword) {
   if (!potentialPassword) {
